@@ -35,8 +35,7 @@ def learn(sentence):
             currentword0 = word
             if currentword1 != "":
                 try:
-                    if memory[currentword1]:
-                        memory[currentword1].append(word)
+                    memory[currentword1].append(word)
                 except:
                     memory[currentword1] = []
                     memory[currentword1].append(word)
@@ -44,9 +43,7 @@ def learn(sentence):
         else:
             print("State: 1!", word)
             try:
-                if memory[currentword0]:
-                    memory[currentword0] = list(dict.fromkeys(memory[currentword0]))
-                    memory[currentword0].append(word)
+                memory[currentword0].append(word)
             except:
                 memory[currentword0] = []
                 memory[currentword0].append(word)
