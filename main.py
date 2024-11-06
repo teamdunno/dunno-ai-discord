@@ -24,7 +24,7 @@ except:
 
 
 def learn(sentence):
-    tmp = sentence.split(" ")
+    tmp = sentence.lower().split(" ")
     state = 0
     currentword0 = ""
     currentword1 = ""
@@ -203,4 +203,4 @@ async def cmd(interaction, prompt: str):
     )
 
 
-bot.run("TOKEN_GOES_HERE")
+bot.run("TOKEN_HERE")
