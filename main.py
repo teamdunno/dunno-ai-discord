@@ -1,7 +1,7 @@
 memory = {}
 banned = ["moutonvache"]
 channels = []
-bannedwords = "nig.+|skibi.+|gyat.+|sigm.+|rizz.+|fanum.+"
+bannedwords = "nig.+|skibi.+|gyat.+|sigm.+|riz.+|fanum.+"
 
 import re
 import random
