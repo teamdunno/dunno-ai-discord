@@ -1,6 +1,7 @@
 memory = {}
 banned = ["moutonvache"]
 channels = []
+bannedwords = "nig.+|sk.+|gyat.+|sigm.+"
 
 import re
 import random
@@ -30,6 +31,9 @@ def learn(sentence):
     currentword1 = ""
     print("Generating pairs...")
     for word in tmp:
+        if re.match(bannedwords, word):
+            print("Blocked word", word)
+            return
         if state == 0:
             print("State: 0!", word)
             currentword0 = word
@@ -70,6 +74,8 @@ def genfromword(word):
     sentence = []
     counter = 0
     state = True
+    if re.match(bannedwords, word):
+        return "Blocked response"
     if word.split(" ") != 1 and not re.match("h.+?(?=o)|h.+i|b.+?(?=e)|hi|.+h.+?(?=o)|.+h.+i|.+b.+?(?=e)|hi", word):
         currentword = word.split(" ")[-1].lower() 
     elif re.match("h.+?(?=o)|h.+i|b.+?(?=e)|hi|.+h.+?(?=o)|.+h.+i|.+b.+?(?=e)|hi", word):
@@ -84,9 +90,7 @@ def genfromword(word):
             if len(match) != 0:
                 print("Match!", match)
                 word = random.choice(list(match))
-                if word == currentword and len(match) > 2:
-                    return "**IDK** what to say\n-# > Teach me"
-                elif word == currentword and len(match) < 2:
+                if word == currentword and len(match) < 2:
                     while count < 5:
                         # brute force, hehe
                         word = random.choice(list(match))
@@ -172,7 +176,7 @@ async def on_message(message):
 @bot.event
 async def on_ready():
     await bot.tree.sync()
-    await bot.change_presence(status=discord.Status.idle, activity=discord.CustomActivity(name=genfromword("hi")))
+    await bot.change_presence(status=discord.Status.idle, activity=discord.CustomActivity(name=genfromword("hi").replace("hi", "")))
     print("Synced commands and connected to API")
     print("====================================")
 
@@ -202,5 +206,4 @@ async def cmd(interaction, prompt: str):
         content=f":white_check_mark:\n> -# You increased the vocabulary length by {len(memory) - oldlen}."
     )
 
-
-bot.run("TOKEN_HERE")
+bot.run("token here")
